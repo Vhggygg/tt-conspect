@@ -1,0 +1,205 @@
+%\section{Вторая лекция}
+\subsection{Ромбовидное свойство и параллельная редукция}
+
+\begin{definition}[Ромбовидное свойство (diamond)]
+    $G$ обладает ромбовидным свойством, если какие бы ни были $a$, $b$, $c$, что $aGb$, $aGc$, $b \ne c$, найдётся такое $d$, что $bGd$ и $cGd$.
+\end{definition}
+
+\begin{example}
+    $(<)$ на натуральных числах обладает ромбовидным свойством.
+    $(>)$ на натуральных числах не обладает ромбовидным свойством.
+\end{example}
+
+$\beta$-редукция не обладает ромбовидным свойством.
+\begin{example} % TODO запилить картинку
+    \begin{gather*}
+        a = (\lambda x . x x)(Ia) \\
+        a \rightarrow_{\beta} (Ia)(Ia) = b\\
+        a \rightarrow_{\beta} (\lambda x . x x) a = c \\
+        b \rightarrow_{\beta} (Ia)a \rightarrow_{\beta} aa \\
+        b \rightarrow_{\beta} a(Ia) \rightarrow_{\beta} aa \\
+        c \rightarrow_{\beta} aa
+    \end{gather*}
+    Нет $d$, что $b \rightarrow_{\beta} d$ и $c \rightarrow_{\beta} d$.
+\end{example}
+
+\begin{theorem}[Чёрча-Россера]
+    $\beta$-редуцируемость обладает ромбовидным свойством.
+\end{theorem}
+
+\begin{lemma}
+    Если $R$ обладает ромбовидным свойством, то $R^{*}$ обладает ромбовидным свойством.
+\end{lemma}
+
+\begin{proof} (Упражнение) \todo % TODO
+    \begin{enumerate}
+        \item $M_{1}RN_{1}$ и $M_{1}RM_{2}...M_{n-1}RM_{n}$ $\Rightarrow$ есть $N_{2}...N_{n}$: \\
+            $N_{1}RN_{2}...N_{n-1}RN_{n}$ и $M_{n}RN_{n}$.
+        \item Покажем ромбовидное свойство.
+        \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}[Параллельная $\beta$-редукция]
+    $A \rightrightarrows_{\beta} B$
+    \begin{enumerate}
+        \item $A =_{\beta} B$, то $A \rightrightarrows_{\beta}B$
+        \item $A \rightrightarrows_{\beta} B$, то $\lambda x.A \rightrightarrows_{\beta} \lambda x . B$
+        \item $P \rightrightarrows_{\beta} Q$ и $R \rightrightarrows_{\beta} S$, то $PR \rightrightarrows_{\beta} QS$
+        \item $(\lambda x . P) Q \rightrightarrows_{\beta} R_{[x:=S]}$, если 
+            $P \rightrightarrows_{\beta}R$ и $Q \rightrightarrows_{\beta} S$.
+    \end{enumerate}
+\end{definition}
+
+\begin{statement}
+    $(\rightrightarrows_{\beta})$ обладает ромбовидным свойством.
+\end{statement}
+
+\begin{proof}
+    (Упражнение) \todo % TODO
+\end{proof}
+
+\begin{statement}
+    Если $A \rightarrow_{\beta} B$, то $A \rightrightarrows_{\beta} B$.
+\end{statement}
+
+\begin{statement}
+    Если $A \rightrightarrows_{\beta} B$, то $A \twoheadrightarrow_{\beta} B$.
+\end{statement}
+
+\begin{proof}
+    (Упражнение) \todo % TODO
+\end{proof}
+
+При этом, обратное не всегда верно.
+
+\begin{example}
+    \begin{gather*}
+        (\lambda x . x x) (\lambda x . x x x) \twoheadrightarrow_{\beta} (\lambda x . x x x)(\lambda x . x x x)(\lambda x . x x x) \\
+        (\lambda x . x x) (\lambda x . x x x) \cancel{\rightrightarrows_{\beta}} (\lambda x . x x x)(\lambda x . x x x)(\lambda x . x x x)
+    \end{gather*}
+\end{example}
+
+\begin{statement}
+    Из предыдущих двух утверждений следует $(\rightarrow_{\beta})^{*} = (\rightrightarrows_{\beta})^{*}$.
+\end{statement}
+
+Теорема Чёрча-Россера следует из приведённых утверждений.
+
+\begin{corollary}
+    Нормальная форма для $\lambda$-выражения единственна, если существует.
+\end{corollary}
+
+\begin{theorem}[Тезис Чёрча]
+    Если функция вычислима с помощью механического аппарата, то она вычислима с помощью $\lambda$-выражения.
+\end{theorem}
+
+\subsection{Порядок редукции}
+\epigraph{"<Завтра! Завтра! Не сегодня!"> "--- так ленивцы говорят.}{sprichwort}
+
+\begin{definition}
+    \begin{align*}
+        K &= \lambda x \lambda y . x \\
+        I &= \lambda x . x \\
+        S &= \lambda x y z . x z (y z)
+    \end{align*}
+\end{definition}
+$I$ выражается через $S$ и $K$: $I = S K K$.
+
+\begin{statement}
+    Пусть $A$ "--- замкнутое $\lambda$-выражение. Тогда найдётся выражение $T$, состоящее только из $S$, $K$, что $A =_{\beta}T$.
+\end{statement}
+
+\begin{example}
+    тут какой-то пример с омегой, подскажите чё там было, \todo % TODO
+\end{example}
+
+\begin{definition}[Нормальный порядок редукции]
+    Нормальным порядком редукции называется редукция самого левого $\beta$-редекса.
+\end{definition}
+"<Ленивые вычисления"> (ну, почти, в ленивых ещё есть меморизация)
+
+\begin{definition}[Аппликативный порядок редукции]
+    Самый левый из самых вложенных.
+\end{definition}
+"<Энергичные вычисления">
+
+\begin{statement}
+    Если нормальная форма существует, она может быть достигнута нормальным порядком редукции.
+\end{statement}
+
+\subsection{Парадокс Карри}
+
+\epigraph{Если это утверждение верно, то русалки существуют.}
+
+Попробуем построить логику на основе $\lambda$-исчисления.
+Введём комбнатор-импликацию, обозначим $(\supset)$. Введём M.P. и правила:
+\begin{enumerate}
+    \item $A \supset A$
+    \item $(A \supset (A \supset B)) \supset (A \supset B)$
+    \item $A =_{\beta} B$, тогда $A \supset B$
+\end{enumerate}
+
+Введём обозначение: $Y_{\supset a} \equiv Y (\lambda t . t \supset a) =_{\beta} Y (\lambda t . t \supset a) \supset a$. Построим парадокс:
+
+\begin{tabular}{lll}
+    1) & $Y_{\supset a} \supset Y_{\supset a}$ & (схема аксиом) \\
+    2) & $Y_{\supset a} \supset (Y_{\supset a} \supset a)$ & (можно доказать) \\
+    3) & $(Y_{\supset a} \supset Y_{\supset a} \supset a) \supset (Y_{\supset a} \supset a)$ & (схема аксиом) \\
+    4) & $Y_{\supset a} \supset a$ & (M.P.) \\
+    5) & $(Y_{\supset a} \supset a) \supset Y_{\supset a}$ & (третье правило) \\
+    6) & $Y_{\supset a}$ & (M.P.) \\
+    7) & $a$ & (M.P.)
+\end{tabular}
+
+Так можно доказать любое $a$. \\
+
+\subsection{Импликационный фрагмент ИИВ}
+
+\begin{definition}[импликационный фрагмент ИИВ]
+    Рассмотрим интуиционистское исчисление высказываний.
+    \begin{enumerate}
+        \item Введём схему аксиом:
+        \[
+            \infer{\Gamma, \varphi \vdash \varphi}{}
+        \]
+        \item Правило введения импликации:
+        \[
+            \infer{\Gamma \vdash \varphi \rightarrow \psi}{\Gamma, \varphi \vdash \psi}
+        \]
+        \item И правило удаления импликации:
+        \[
+            \infer{\Gamma \vdash \psi}{\Gamma \vdash \varphi \rightarrow \psi & \Gamma \vdash \varphi}
+        \]
+    \end{enumerate}
+
+    Мы построили импликационный фрагмент ИИВ (и.ф.и.и.в).
+\end{definition}
+
+\begin{example} Докажем $\varphi \rightarrow \psi \rightarrow \varphi$:
+\[
+    \infer[(2)]
+        { \vdash \varphi \rightarrow (\psi \rightarrow \varphi) }
+        { \infer[(2)]
+            { \varphi \vdash \psi \rightarrow \varphi }
+            { \infer[(1)]
+                { \varphi, \psi \vdash \varphi}
+                {}
+            }
+        }
+\]
+\end{example}
+
+\begin{theorem}
+    И.ф.и.и.в полон в моделях Крипке.
+\end{theorem}
+
+\begin{proof}
+    Допишу, \todo % TODO
+\end{proof}
+
+\begin{corollary}
+    И.ф.и.и.в замкнут относительно выводимости.
+\end{corollary}
+Если некоторое утверждение выводится в ИИВ ($\vdash_{и} \varphi$) и содержит только импликации,
+то оно выводится и в и.ф.и.и.в. ($\vdash_{и \rightarrow} \varphi$).

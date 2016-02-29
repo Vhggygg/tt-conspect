@@ -7,15 +7,19 @@
 \usepackage[T1,T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
-\usepackage{geometry}
+%\usepackage{geometry}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
 \usepackage[mathscr]{euscript}
 \usepackage{microtype}
 \usepackage{bnf}
 \usepackage{enumitem}
 \usepackage{bm}
 \usepackage{listings}
+\usepackage{cancel}
+\usepackage{proof}
+\usepackage{epigraph}
+\usepackage{titlesec}
 %\setmainfont[Ligatures=TeX,SmallCapsFont={Times New Roman}]{Palatino Linotype}
-%\renewcommand*\rmdefault{ppl}
 
 \selectlanguage{russian}
 
@@ -33,21 +37,29 @@
 \theoremstyle{definition}
 \newtheorem*{definition}{Определение}
 \theoremstyle{plain}
-\newtheorem{theorem}{Теорема}
+\newtheorem{theorem}{Теорема}[section]
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}[theorem]{Лемма}
 \newtheorem{statement}[theorem]{Утверждение}
+\newtheorem{corollary}[theorem]{Следствие}
 \theoremstyle{remark}
 \newtheorem*{example}{Пример}
+\newtheorem{property}[theorem]{Свойство}
 
 \lstset{language=C++}
 
+\newcommand{\todo}{\textsc{\textbf{TODO}}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\xx}{ч}
+\newcommand{\rr}{к}
+
 \maketitle
+\tableofcontents
 %\newpage
+\newcommand{\sectionbreak}{\clearpage}
 
-%\tableofcontents
-%\newpage
-
-\input{sec1.tex}
+\input{lec1.tex}
+\input{lec2.tex}
+\input{lec3.tex}
 
 \end{document}
