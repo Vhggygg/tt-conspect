@@ -1,0 +1,154 @@
+\section{\texorpdfstring{Задачи в $\lambda$-исчислении}{Link to programming}}
+\epigraph{Помните, что в $\lambda$-исчислении нет смысла? Здесь смысл отрицательный, скорее.}{Д.Г.}
+
+В $\lambda$-исчислении выделяют 3 задачи:
+\begin{enumerate}[label=(\asbuk*)]
+    \item Проверка типа: верно ли $\Gamma \vdash M : \sigma$?
+    \item Вывод типа: $? \vdash M : ?$
+    \item Обитаемость типа: $? \vdash ? : \sigma$
+\end{enumerate}
+
+В этом разделе будем рассматривать задачу вывода типа.
+
+\subsection{\texorpdfstring{Вывод типа}{Type deduction}}
+
+\begin{definition}[Алгебраический терм]
+    \begin{gather*}
+        \begin{bnf}
+            A ::= x | f\left(A, \ldots, A\right)
+        \end{bnf} \\
+        (x \in X)
+    \end{gather*}
+\end{definition}
+
+Уравнение в алгебраических термах: $A = A$.
+
+\begin{definition}[$S$-подстановка]
+    \[
+        S : X \rightarrow A
+    \]
+    Причём $S$ "--- id почти везде. (везде кроме конечного количества)
+\end{definition}
+
+\begin{definition}[Естественное обобщение]
+    Естественное обобщение "--- такая подстановка $S : A \rightarrow A$, что
+    $S\left(f\left(A_1, \dots, A_n\right)\right) = f\left(S(f_1), \ldots, S(f_n)\right)$
+\end{definition}
+
+\begin{definition}[Унификатор]
+    $S$ "--- унификатор (решение уравнения) $P=Q$, если $S(P)=S(Q)$.
+\end{definition}
+Задача решения уравнение в алгебраических термах "--- унификация.
+
+\begin{definition}[Композиция]
+    $(S \circ T)(A) = S(T(A))$
+\end{definition}
+
+\begin{definition}[Частный случай]
+    $T$ "--- частный случай $U$, если существует такое $S$, что $T = S \circ U$.
+\end{definition}
+
+\begin{definition}[Наибольший общий унификатор]
+    Наибольший общий унификатор $U$ для уравнения $A=B$ "--- такой унификатор, что:
+    \begin{enumerate}
+        \item $U(A)=U(B)$.
+        \item Любой другой унификатор "--- частный случай $U$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Несовместная система]
+    Назовём систему несовместной, если выполнено одно из условий:
+    \begin{enumerate}
+        \item в ней есть уравнение вида $f(\ldots)=g(\ldots)$
+        \item в ней есть уравнение вида $x = \ldots x \ldots$
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Эквивалентные системы]
+    Назовём две системы эквивалентными, если они имеют одинаковые решения.
+\end{definition}
+
+\begin{statement}
+    Для любой системы
+    \[
+        \begin{cases} A_1 = B_1 \\ \vdots \\ A_n = B_n \end{cases}
+    \]
+    найдётся эквивалентная ей система из одного уравнения:
+    \[
+        f(A_1, \ldots, A_n) = f(B_1, \ldots, B_n)\text{,}
+    \]
+    где $f$ "--- новый символ.
+\end{statement}
+
+\begin{definition}[Разрешённая система]
+    Назовём систему разрешённой, если:
+    \begin{enumerate}
+        \item все уравнения имеют вид $x = A$;
+        \item все переменные в левой части встречаются однократно.
+    \end{enumerate}
+\end{definition}
+
+Решение по системе в разрешённой форме строится так:
+По системе в разрешённой форме мы можем построить решение $S$, определив $S(x_i) = A_i$ для каждого $i$.
+\todo
+
+\begin{statement}
+    Построенный по системе в разрешённой форме унификатор $S$ "--- наибольший общий унификатор.
+\end{statement}
+
+\begin{statement}
+    Несовместная система не имеет решений.
+\end{statement}
+
+Рассотрим следующие преобразования, которые не меняют свойства системы:
+\begin{center}
+\begin{tabular}{Sl Sl Sl}
+    Выражения                         & Условия             & Новые выражения \\ \hline
+    $T=x$, $T$ не переменная          &                     & $x=T$ \\ \hline
+    $T=T$                             &                     & убрать это уравнение \\ \hline
+    $f(A_1, \ldots A_n) = g(B_1, \ldots B_n)$
+                                      & $f=g$               & $ A_1 = B_1 \ldots A_n = B_n$ \\ \cline{2-3}
+                                      & $f \neq g$          & система несовместна \\ \hline
+    $x=T$, $R=S$, $x$ входит в $S$ или $T$
+                                      & $T$ не содержит $x$ & $x=T$, $R\left[x\coloneqq T\right]=S\left[x\coloneqq T\right]$ \\ \cline{2-3}
+                                      & $T$ содержит $x$    & система несовместна \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{statement}
+    Последовательное применение правил либо за конечное число шагов приведёт систему в разрешённый вид, либо сделает её несовместной.
+\end{statement}
+
+\begin{proof} \todo
+    Пусть $(n_1, n_2, n_3)$ "--- характеристика системы, где
+    $n_1$ "--- количество переменных не входящих слева в систему слева от знака равенства только один раз,
+    $n_2$ "--- общее количество вхождений функциональных символов в $S$,
+    $n_3$ "--- количество выражений вида $x=x$ или $T=x$.
+    Каждое преобразование уменьшает эту тройку (если сравнивать лексикографически).
+\end{proof}
+
+\begin{theorem}
+    Задача вывода типа в $\lambda$-исчислении разрешима.
+\end{theorem}
+
+\begin{proof}
+    Опишем алгоритм. \\
+    Пусть нам дан $\lambda$-терм $M$. Рекурсивно построим по нему систему уравнений $E_m$:
+    \begin{center}
+    \begin{tabular}{Sl Sl Sl} \hline
+        $M \equiv x$ & $E_m=\set{}$ & $\tau_m=\alpha$ "--- новая переменная. \\ \hline
+        $M \equiv PR$ & $E_m=E_p \cup E_r \cup \set{\tau_p=\tau_r\rightarrow\pi}$ & $\tau_m=\pi$ \\ \hline
+        $M \equiv \lambda x . P$ & $E_m=E_p$ & $\tau_m=\tau_x\rightarrow\tau_p$ \\ \hline
+    \end{tabular}
+    \end{center}
+    Решим построенную систему уравнений.\\
+    Можно показать, что алгоритм корректный.
+\end{proof}
+
+\begin{example}
+    \todo %todo
+\end{example}
+
+\subsection{\texorpdfstring{Про ложь}{About false}}
+
+\todo\ послушать запись. %todo

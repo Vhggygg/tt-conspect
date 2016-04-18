@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{mathtext}
+\usepackage{mathtools}
 \usepackage[T1,T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 %\usepackage{geometry}
@@ -20,6 +21,12 @@
 \usepackage{titlesec}
 \usepackage{xcolor}
 \usepackage{stmaryrd}
+\usepackage{cellspace}
+\usepackage{cmll}
+\usepackage{tabularx}
+\usepackage{verbatimbox}
+\usepackage{multirow}
+
 \usepackage[hidelinks]{hyperref}
 
 %\setmainfont[Ligatures=TeX,SmallCapsFont={Times New Roman}]{Palatino Linotype}
@@ -37,8 +44,12 @@
 
 %http://tex.stackexchange.com/questions/31526/macro-for-left-and-right/58641#58641
 
+\DeclareMathOperator{\rank}{rk}
+\DeclareMathOperator{\inj}{inj}
+\DeclareMathOperator{\FV}{FV}
+
 \title{Теория типов}
-\author{Человек, который поспорил на 2 торта $\heartsuit$}
+\author{$\heartsuit$}
 %Человек, который три семестра собирался верстать конспекты \\
 %Человек, который иногда вспоминает, что в ХПИ не так уж и плохо \\
 %Человек, который всегда рад помочь $\heartsuit$}
@@ -60,20 +71,32 @@
 
 \lstset{language=C++}
 
-\newcommand{\todo}{\textsc{\textbf{TODO}}}
+\newcommand{\todo}{\textsc{\textbf{TODO}}\ }
 \newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
 \newcommand{\xx}{ч}
 \newcommand{\rr}{к}
+\newcommand{\case}[3]{\text{\textbf{case}}~#1~#2~#3}
+\newcommand{\pack}[2]{\text{\textbf{pack}}~#1~\text{\textbf{to}}~#2}
+\newcommand{\abstype}[4]{\text{\textbf{abstype}}~#1~\text{\textbf{with}}~#2~\text{\textbf{in}}~#3~\text{\textbf{is}}~#4}
+\newcommand{\lett}[2]{\text{\textbf{let}}~#1~\text{\textbf{in}}~#2}
 
 \maketitle
 \tableofcontents
 %\newpage
 \newcommand{\sectionbreak}{\clearpage}
 
-\input{lec1.tex}
-\input{lec2.tex}
-\input{lec3.tex}
-\input{lec4.tex}
-\input{lec5.tex}
+%\renewcommand{\arraystretch}{1.5}
+\setlength\cellspacetoplimit{5pt}
+\setlength\cellspacebottomlimit{5pt}
+\setlength{\inferLineSkip}{4pt}
+
+\input{lec01.tex}
+\input{lec02.tex}
+\input{lec03.tex}
+\input{lec04.tex}
+\input{lec05.tex}
+\input{lec06.tex}
+\input{lec10.tex}
 
 \end{document}
